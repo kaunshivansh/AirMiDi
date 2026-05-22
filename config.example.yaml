@@ -1,0 +1,55 @@
+audio:
+  sample_rate: 44100
+  blocksize: 256          # Preferred block size for low-latency audio (fallback is auto-negotiated)
+  delay_feedback: 0.35
+  delay_ms: 400
+  master_vol: 0.85
+
+gesture:
+  confirm_frames: 3       # Number of consecutive matching frames required to trigger a gesture
+  thumb_thresh: -0.05     # Initial thumb detection threshold (re-calibrated live)
+  finger_thresh: -0.25    # Initial finger fold threshold (re-calibrated live)
+  calib_duration_s: 3
+  calib_multiplier: 0.5
+  min_hand_confidence: 0.7
+
+camera:
+  device_index: 0
+  width: 1280
+  height: 720
+
+recording:
+  folder: recordings
+  format: wav
+
+logging:
+  level: INFO
+  file: logs/air_instrument.log
+  max_bytes: 10485760     # 10 MB
+  backup_count: 5
+
+midi:
+  enabled: true
+  port_name: "virtual"    # "virtual" for virtual port, or specific port name/index
+  channel: 0              # MIDI Channel for melodic notes (0-15)
+  drum_channel: 9         # MIDI Channel for drums (0-15)
+  velocity:
+    mode: "dynamic"       # "fixed" or "dynamic"
+    default_value: 100
+  expression:
+    enabled: true
+    y_axis:
+      cc_number: 1        # CC 1 (Modulation Wheel)
+      min_value: 0
+      max_value: 127
+      invert: true        # Higher hand position maps to higher CC value
+    x_axis:
+      cc_number: 10       # CC 10 (Pan)
+      min_value: 0
+      max_value: 127
+      invert: false
+    z_axis:
+      cc_number: 74       # CC 74 (Filter Cutoff)
+      min_value: 0
+      max_value: 127
+      invert: false
