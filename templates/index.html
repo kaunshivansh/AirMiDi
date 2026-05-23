@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Instrument - Web Client</title>
+    <!-- MediaPipe dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: #0f0f0f; 
+            color: #eee; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 { color: #00ffff; margin: 0; padding-bottom: 5px; }
+        .container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            max-width: 800px;
+            width: 100%;
+        }
+        .video-container { 
+            position: relative; 
+            display: inline-block; 
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+            background: #000;
+        }
+        video { display: none; }
+        canvas { 
+            display: block;
+            width: 100%; 
+            max-width: 640px; 
+            height: auto;
+        }
+        .controls { 
+            margin-top: 25px; 
+            background: #1a1a1a; 
+            padding: 20px; 
+            border-radius: 12px; 
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            border: 1px solid #333;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label { display: block; margin-bottom: 8px; color: #aaa; }
+        select { 
+            width: 100%; 
+            padding: 10px; 
+            background: #2a2a2a; 
+            color: white; 
+            border: 1px solid #444; 
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        select:focus { outline: none; border-color: #00ffff; }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        #status { color: #aaa; font-weight: bold; }
+        #status.active { color: #00ff00; }
+        #active-note { color: #ffaa00; font-weight: bold; font-size: 18px;}
+        
+        .instructions {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+        .instructions span { color: #ccc; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Air Instrument Web</h1>
+        <p>Connect your DAW via Web MIDI</p>
+    </div>
+    
+    <div class="container">
+        <div class="video-container">
+            <video class="input_video" autoplay playsinline></video>
+            <canvas class="output_canvas" width="640" height="480"></canvas>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="midi-out">DAW / MIDI Output Destination:</label>
+                <select id="midi-out">
+                    <option value="">Loading MIDI Outputs...</option>
+                </select>
+            </div>
+            
+            <div class="status-bar">
+                <div id="status">Waiting for camera...</div>
+                <div id="active-note">Note: None</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <strong>Gestures (Piano Mode - C4 to B4):</strong><br>
+            <span>1 Finger = C4</span> | 
+            <span>2 Fingers = D4</span> | 
+            <span>3 Fingers = E4</span> | 
+            <span>4 Fingers = F4</span> | 
+            <span>5 Fingers = G4</span> | 
+            <span>Fist = Kick Drum</span>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
